@@ -15,6 +15,7 @@
 
 - [`latest`, `10`](https://github.com/hybridadmin/docker-ansible-centosstream/tree/main/10/Dockerfile)
 - [`9`](https://github.com/hybridadmin/docker-ansible-centosstream/tree/main/9/Dockerfile)
+- [`8`](https://github.com/hybridadmin/docker-ansible-centosstream/tree/main/8/Dockerfile)
 
 ## How to Build the image
 
