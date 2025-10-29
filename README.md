@@ -1,6 +1,6 @@
 # CentOS Stream Docker Images with ansible and systemd
 
-![Build](https://img.shields.io/github/actions/workflow/status/hybridadmin/docker-ansible-centosstream/build.yml) ![Docker Pulls](https://img.shields.io/docker/pulls/hybridadmin/ansible-centos)
+![Build](https://img.shields.io/github/actions/workflow/status/hybridadmin/docker-ansible-centosstream/build.yml) ![Docker Pulls](https://img.shields.io/docker/pulls/hybridadmin/ansible-centosstream)
 
 > CentOS Stream Docker images to be used for testing ansible playbooks and roles.
 
