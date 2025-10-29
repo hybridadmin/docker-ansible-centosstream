@@ -1,0 +1,35 @@
+name: build_push
+
+on: [push]
+
+jobs:
+  run_molecule_test:
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        distro:
+          - image: centosstream
+            version: "8"
+            tags: "8"
+          - image: centosstream
+            version: "9"
+            tags: "9"
+          - image: centosstream
+            version: "10"
+            tags: "10,latest"
+    uses: hybridadmin/reuse-workflows/.github/workflows/build_push.yml@main
+    secrets: inherit
+    with:
+      distro_image: '${{ matrix.distro.image }}'
+      distro_tags: '${{ matrix.distro.tags }}'
+      distro_platform: 'linux/amd64,linux/arm64' #'${{ matrix.distro.platform }}'
+      distro_version: '${{ matrix.distro.version }}'
+
+  run_update_readme:
+    needs:
+      - run_molecule_test
+    uses: hybridadmin/reuse-workflows/.github/workflows/update_readme.yml@main
+    secrets: inherit
+    with:
+      repo_name: 'hybridadmin/ansible-centosstream'

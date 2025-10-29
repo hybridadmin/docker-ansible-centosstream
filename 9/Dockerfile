@@ -1,11 +1,8 @@
-FROM centos:9
+FROM quay.io/centos/centos:stream9
 LABEL maintainer="Tinashe Chikomo <tinashe@chikomo.net>"
 
 ENV container=docker
 ENV pip_packages="ansible yamllint ansible-lint pymysql"
-
-RUN cd /lib/systemd/system/sysinit.target.wants/; \
-    for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done
 
 RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /etc/systemd/system/*.wants/* \
@@ -15,25 +12,21 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /lib/systemd/system/basic.target.wants/* \
     /lib/systemd/system/anaconda.target.wants/*
 
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* \
- && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
 
 # Install requirements.
-RUN yum -y install rpm centos-release dnf-plugins-core \
- && yum -y update \
- && yum -y config-manager --set-enabled powertools \
- && yum -y install \
+RUN dnf -y install rpm centos-release dnf-plugins-core \
+ && dnf -y update \
+ && dnf --allowerasing --nobest -y install \
       epel-release \
       initscripts \
       glibc-langpack-en \
       sudo \
       which \
       hostname \
-      libyaml-devel \
       python3 \
       python3-pip \
-      python3-pyyaml \
- && yum clean all
+      gcc python3-devel \
+ && dnf clean all
 
 # Install Ansible via Pip.
 RUN python3 -m pip install --upgrade pip
